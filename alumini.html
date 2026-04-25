@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlumniConnect — Mentorship Directory of IIIT BHAGALPUR</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="auth-screen" id="loginScreen">
+  <div class="auth-card">
+    <div class="auth-logo">AlumniConnect</div>
+    <div class="auth-tagline">Find your mentor. Grow your career.</div>
+    <div class="auth-title">Welcome back</div>
+    <div class="form-group"><label>Email address</label><input type="email" id="loginEmail" placeholder="namerollno.@id" /></div>
+    <div class="form-group"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" /></div>
+    <button class="btn-primary" onclick="handleLogin()">Sign in</button>
+    <div class="auth-switch">New here? <a onclick="showSignup()">Create an account</a></div>
+  </div>
+</div>
+
+<div class="auth-screen" id="signupScreen" style="display:none;">
+  <div class="auth-card">
+    <div class="auth-logo">AlumniConnect -IIIT BGPIANS</div>
+    <div class="auth-tagline">Join 10+ alumni mentors</div>
+    <div class="auth-title">How do you want to join?</div>
+    <div class="signup-type-btns">
+      <div class="signup-type-btn" onclick="selectSignupType('student')"><div class="icon">🎓</div><div class="label">Student / Mentee</div><div class="desc">Looking for guidance & mentorship</div></div>
+      <div class="signup-type-btn" onclick="selectSignupType('alumni')"><div class="icon">🌟</div><div class="label">Alumni / Mentor</div><div class="desc">Want to give back & mentor</div></div>
+    </div>
+    <div class="auth-switch">Already have an account? <a onclick="showLogin()">Sign in</a></div>
+  </div>
+</div>
+
+<div class="auth-screen" id="studentSignupScreen" style="display:none;">
+  <div class="auth-card">
+    <div class="auth-logo">AlumniConnect-IIIT BGPIANS</div>
+    <div class="auth-tagline">Start your mentorship journey</div>
+    <div class="auth-title">Create your student account</div>
+    <div class="form-row">
+      <div class="form-group"><label>First name</label><input type="text" id="studentFirst" placeholder="Pranav" /></div>
+      <div class="form-group"><label>Last name</label><input type="text" id="studentLast" placeholder="Raj" /></div>
+    </div>
+    <div class="form-group"><label>Email address</label><input type="email" id="studentEmail" placeholder="namerollno.@id" /></div>
+    <div class="form-group"><label>Password</label><input type="password" id="studentPass" placeholder="Min. 8 characters" /></div>
+    <div class="form-group"><label>Expected Graduation Year</label><input type="text" id="studentYear" placeholder="e.g. 2029" /></div>
+    <button class="btn-primary" onclick="handleStudentSignup()">Create account</button>
+    <div class="auth-switch"><a onclick="showSignup()">← Back to options</a></div>
+  </div>
+</div>
+
+<div class="auth-screen" id="alumniSignupScreen" style="display:none;">
+  <div class="auth-card wide">
+    <div class="auth-logo">AlumniConnect</div>
+    <div class="auth-tagline">Share your experience with the next generation</div>
+    <div class="steps-indicator">
+      <div class="step active" id="step1"></div>
+      <div class="step" id="step2"></div>
+      <div class="step" id="step3"></div>
+    </div>
+    <div id="alumniStep1">
+      <div class="auth-title">📋 Import from LinkedIn</div>
+      <div class="linkedin-box">
+        <div class="linkedin-box-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          How to import your LinkedIn profile
+        </div>
+        <p>1. Go to your LinkedIn profile page<br>2. Select all text (Ctrl+A / Cmd+A)<br>3. Copy (Ctrl+C / Cmd+C)<br>4. Paste below</p>
+      </div>
+      <div class="form-group"><label>Paste your LinkedIn profile content here</label><textarea id="linkedinContent" class="linkedin-textarea" placeholder="Paste your LinkedIn profile content here..."></textarea></div>
+      <div class="parse-status" id="parseStatus"></div>
+      <button class="btn-linkedin" onclick="parseLinkedIn()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        Parse LinkedIn Profile
+      </button>
+      <div style="text-align:center;margin-top:1rem;color:var(--text3);font-size:.85rem;">or</div>
+      <button class="btn-secondary" onclick="skipToManual()">Fill in manually instead</button>
+      <div class="auth-switch" style="margin-top:1.5rem;"><a onclick="showSignup()">← Back to options</a></div>
+    </div>
+    <div id="alumniStep2" style="display:none;">
+      <div class="auth-title">✏️ Review Your Profile</div>
+      <div class="preview-card show" id="previewCard">
+        <div class="preview-header">
+          <div class="preview-avatar" id="previewAvatar">P</div>
+          <div><div class="preview-name" id="previewName">Pranav Raj</div><div class="preview-role" id="previewRole">Software Engineer at Google</div></div>
+        </div>
+        <div class="preview-tags" id="previewSkills"></div>
+      </div>
+      <div class="form-row" style="margin-top:1rem;">
+        <div class="form-group"><label>First name *</label><input type="text" id="alumniFirst" placeholder="Pranav" /></div>
+        <div class="form-group"><label>Last name *</label><input type="text" id="alumniLast" placeholder="Raj" /></div>
+      </div>
+      <div class="form-group"><label>Current Role / Title *</label><input type="text" id="alumniRole" placeholder="Senior Software Engineer" /></div>
+      <div class="form-group"><label>Company *</label><input type="text" id="alumniCompany" placeholder="Google" /></div>
+      <div class="form-row-3">
+        <div class="form-group"><label>Industry *</label><select id="alumniIndustry"><option value="">Select...</option><option>Tech</option><option>Finance</option><option>Healthcare</option><option>Consulting</option><option>Media</option><option>SaaS</option><option>Education</option><option>Non-profit</option><option>Other</option></select></div>
+        <div class="form-group"><label>Domain *</label><select id="alumniDomain"><option value="">Select...</option><option>Software Engineering</option><option>Product Management</option><option>Data Science</option><option>Design</option><option>Marketing</option><option>Investment Banking</option><option>Management Consulting</option><option>Venture Capital</option><option>Entrepreneurship</option><option>AI Research</option><option>Infrastructure</option><option>Other</option></select></div>
+        <div class="form-group"><label>Grad Year *</label><input type="text" id="alumniGrad" placeholder="2019" /></div>
+      </div>
+      <div class="form-group"><label>Skills (press Enter to add)</label><div class="skills-input-container" id="skillsContainer"><input type="text" id="skillInput" placeholder="Type a skill and press Enter..." onkeydown="handleSkillInput(event)" /></div></div>
+      <button class="btn-primary" onclick="goToStep3()">Continue →</button>
+      <button class="btn-secondary" onclick="goToStep1()">← Back</button>
+    </div>
+    <div id="alumniStep3" style="display:none;">
+      <div class="auth-title">🎯 Complete Your Profile</div>
+      <div class="form-group"><label>Email address *</label><input type="email" id="alumniEmail" placeholder="namerollno.@id" /></div>
+      <div class="form-group"><label>Password *</label><input type="password" id="alumniPass" placeholder="Min. 8 characters" /></div>
+      <div class="form-group"><label>About / Bio *</label><textarea id="alumniBio" rows="3" placeholder="Tell students about your journey..."></textarea></div>
+      <div class="form-group"><label>Mentorship Preferences</label><textarea id="alumniMentorship" rows="2" placeholder="What kind of mentees are you looking for?"></textarea></div>
+      <div class="form-group"><label>Availability</label><select id="alumniAvailability"><option value="available">🟢 Available - Open to new mentees</option><option value="busy">🟡 Busy - Limited availability</option><option value="unavailable">⚫ Unavailable - Not accepting mentees</option></select></div>
+      <button class="btn-primary" onclick="handleAlumniSignup()">🚀 Create Alumni Profile</button>
+      <button class="btn-secondary" onclick="goToStep2()">← Back</button>
+    </div>
+  </div>
+</div>
+
+<div class="app" id="mainApp">
+  <header>
+    <div class="header-left">
+      <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="logo">AlumniConnect -IIIT BHAGALPUR </div>
+      <span class="nav-badge">Directory</span>
+    </div>
+    <div class="header-right">
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+      <div class="user-avatar" id="userAvatar">AC</div>
+      <button class="logout-btn" onclick="handleLogout()">Log out</button>
+    </div>
+  </header>
+  <div class="main-layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section"><div class="sidebar-label">Industry</div><div class="filter-group" id="industryFilters"></div></div>
+      <div class="sidebar-section"><div class="sidebar-label">Domain</div><div class="filter-group" id="domainFilters"></div></div>
+      <div class="sidebar-section"><div class="sidebar-label">Graduation Year</div><select class="filter-select" id="yearFilter" onchange="applyFilters()"><option value="">All years</option></select></div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Availability</div>
+        <div class="filter-group" id="availFilters">
+          <div class="filter-chip" data-avail="available" onclick="toggleFilter(this,'avail')"><span>🟢 Available</span></div>
+          <div class="filter-chip" data-avail="busy" onclick="toggleFilter(this,'avail')"><span>🟡 Busy</span></div>
+          <div class="filter-chip" data-avail="unavailable" onclick="toggleFilter(this,'avail')"><span>⚫ Unavailable</span></div>
+        </div>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="content-header">
+        <div class="search-bar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search name, company, skills..." oninput="debouncedFilter()" />
+        </div>
+        <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+          <option value="default">Sort: Default</option>
+          <option value="az">Name A–Z</option>
+          <option value="za">Name Z–A</option>
+          <option value="newest">Newest Grads</option>
+          <option value="oldest">Oldest Grads</option>
+        </select>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-all" onclick="switchTab('all')">All Alumni</button>
+        <button class="tab-btn" id="tab-bookmarks" onclick="switchTab('bookmarks')">⭐ Bookmarked</button>
+      </div>
+      <div class="results-info" id="resultsInfo" style="margin-bottom:1rem;"></div>
+      <div class="alumni-grid" id="alumniGrid"></div>
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-avatar" id="modalAvatar"></div>
+      <div class="modal-info">
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-role" id="modalRole"></div>
+        <div class="modal-company" id="modalCompany"></div>
+        <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;" id="modalBadges"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">/
+      <div class="modal-section"><div class="modal-section-title">About</div><div class="modal-bio" id="modalBio"></div></div>
+      <div class="modal-section"><div class="modal-section-title">Highlights</div><div class="modal-stats" id="modalStats"></div></div>
+      <div class="modal-section"><div class="modal-section-title">Skills & Expertise</div><div class="card-skills" id="modalSkills"></div></div>
+      <div class="modal-section" id="mentorshipInfo"><div class="modal-section-title">Mentorship Preferences</div><div class="modal-bio" id="modalMentor"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-primary" onclick="requestMentorship()">📩 Request Mentorship</button>
+      <button class="btn-modal-secondary" id="modalBookmarkBtn" onclick="toggleModalBookmark()">⭐ Save Profile</button>
+      <a class="btn-modal-linkedin" id="modalLinkedInBtn" href="#" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="back.js"></script>
+</body>
+</html>
