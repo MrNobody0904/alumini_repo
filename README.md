@@ -1,79 +1,159 @@
-🎓 AlumniConnect — IIIT Bhagalpur
+# AlumniConnect — IIIT Bhagalpur
 
-A web-based mentorship directory designed to connect students of IIIT Bhagalpur with alumni for career guidance, mentorship, and professional growth.
+> **Find your mentor. Grow your career.**  
+> A mentorship directory connecting students of IIIT Bhagalpur with alumni across top companies and domains.
 
-🚀 Overview
+---
 
-AlumniConnect bridges the gap between students and alumni by providing a centralized platform where:
+## 📌 Overview
 
-Students can explore alumni career journeys
-Alumni can mentor and guide juniors
-Meaningful connections are built within the institute
-❗ Problem Statement
-🔍 No centralized alumni directory
-🤝 Lack of structured mentorship channels
-📊 Limited visibility into real career paths
-💡 Solution
+**AlumniConnect** is a fully client-side web application that serves as a mentorship directory for IIIT Bhagalpur (IIIT BGP). Students can discover alumni mentors, filter by industry or domain, bookmark profiles, and send mentorship requests — all without a backend.
 
-AlumniConnect provides:
+Alumni can register their profiles either by importing from LinkedIn or filling in details manually, and students can sign up to browse and connect with them.
 
-🌐 Institutional mentorship portal
-🔐 Role-based authentication (Student / Alumni)
-🔎 Smart searchable alumni directory
-💬 One-click mentorship requests
-⭐ Bookmark favorite profiles
-🌙 Dark / Light mode support
-🛠️ Tech Stack
+---
 
-Built using pure web technologies:
+## ✨ Features
 
-HTML5
-CSS3
-JavaScript (ES6+)
-Google Fonts
+### 🔐 Authentication
+- Student and Alumni sign-up flows
+- Login for existing users (session stored in memory)
+- Alumni registration via a guided 3-step form
 
-💾 Data stored using localStorage (no backend required)
+### 🔗 LinkedIn Profile Import
+- Paste raw LinkedIn profile text and let the parser auto-extract:
+  - Name, current role, and company
+  - Skills (with fallback keyword detection)
+  - Graduation year and bio
+- Manual entry fallback if parsing isn't needed
 
-✨ Key Features
-👤 Alumni Profiles
-Name, role, company
-Graduation year & domain
-Skills & availability status
-Bookmark & profile view
-🔎 Advanced Search & Filters
-Filter by industry, domain, grad year, availability
-Debounced live search
-🔗 LinkedIn Import
-Paste LinkedIn data
-Auto-fill profile using parsing
-📄 Detailed View
-Full profile modal with bio, skills, mentorship preferences
-🔄 User Flow
-🎓 Student
-Sign up
-Browse directory
-Filter/search alumni
-View profile
-Request mentorship
-🌟 Alumni
-Sign up (multi-step)
-Import LinkedIn / manual entry
-Edit profile
-Set availability
-Accept requests
-🔮 Future Scope
-🔧 Backend integration (cloud database)
-📩 Email notifications
-📅 Session scheduling system
-🔔 Admin dashboard
-📱 Mobile app
-🤖 AI-based mentor recommendations
-👥 Team
-Pranav Raj
-Priyam Kumar De
-Abhinav Kumar
-Aditya Raj
-Arth Soham
-📌 Conclusion
+### 🗂️ Alumni Directory
+- Card-based grid layout showing all alumni
+- Real-time search by name, company, role, skills, or domain
+- Filter sidebar for:
+  - **Industry** (Tech, Finance, Media, SaaS, etc.)
+  - **Domain** (Software Engineering, Product Management, Data Science, etc.)
+  - **Graduation Year**
+  - **Availability** (Available / Busy / Unavailable)
+- Sort options: Default, A–Z, Z–A, Newest Grads, Oldest Grads
 
-AlumniConnect is a simple yet powerful step toward building a strong alumni-student ecosystem at IIIT Bhagalpur, enabling mentorship, guidance, and career clarity.
+### 👤 Alumni Profile Modal
+- Detailed profile view with bio, stats (connections, sessions, rating), and skills
+- Mentorship preferences and availability status
+- Direct LinkedIn profile link
+- Bookmark / save profile toggle
+
+### ⭐ Bookmarks
+- Save favourite alumni profiles
+- Switch between "All Alumni" and "Bookmarked" tabs
+- Bookmarks persist via `localStorage`
+
+### 🌗 Theme Support
+- Light and dark mode toggle
+
+### 📱 Responsive Design
+- Mobile-friendly sidebar with hamburger toggle
+- Responsive card grid layout
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Markup | HTML5 |
+| Styling | CSS3 (custom properties, flexbox, grid) |
+| Logic | Vanilla JavaScript (ES6+) |
+| Fonts | Google Fonts — DM Sans & DM Serif Display |
+| Storage | `localStorage` (client-side persistence) |
+| Backend | None — fully static |
+
+---
+
+## 📁 Project Structure
+
+```
+alumniconnect/
+├── alumini.html       # Main HTML — all screens and modals
+├── style.css          # All styling, themes, and responsive rules
+└── back.js            # All application logic (auth, filters, rendering, localStorage)
+```
+
+---
+
+## 🚀 Getting Started
+
+No build step or server required.
+
+## 🧑‍💻 How to Use
+
+### As a Student
+1. Open the app and click **Create an account**
+2. Select **Student / Mentee**
+3. Fill in your name, email, password, and expected graduation year
+4. Browse the alumni directory and use filters to find the right mentor
+5. Click any card to open the full profile, then click **📩 Request Mentorship**
+
+### As an Alumni
+1. Click **Create an account** → **Alumni / Mentor**
+2. Optionally paste your LinkedIn profile text for auto-import
+3. Review and complete your profile across 3 steps
+4. Your profile will appear in the directory immediately after sign-up
+
+---
+
+## 👥 Alumni in the Directory
+
+The directory includes pre-seeded alumni from IIIT Bhagalpur across a range of companies and domains:
+
+| Name | Company | Domain |
+|---|---|---|
+| Priya Sharma | Google | Product Management |
+| Mohan Das | Meta | Software Engineering |
+| Anika Patel | Netflix | Data Science |
+| Sweta Bansal | Goldman Sachs | Investment Banking |
+| Sonia Kumari | Figma | Design |
+| Danish Yadav | Nexus AI | Entrepreneurship |
+| Raj Menon | HubSpot | Marketing |
+| Ankur Dwivedi | — | General |
+| + 12 more IIIT BGP alumni | | |
+
+Alumni profiles include connections count, mentorship sessions, and ratings.
+
+---
+
+## 🔧 Adding New Alumni (Developers)
+
+To add a permanent alumni entry, append an object to the `DEFAULT_ALUMNI` array in `back.js`:
+
+```js
+{
+  id: 21,                          // unique integer
+  name: 'Full Name',
+  grad: 2022,                      // graduation year
+  role: 'Software Engineer',
+  company: 'Company Name',
+  industry: 'Tech',                // Tech | Finance | Media | SaaS | Healthcare | ...
+  domain: 'Software Engineering',  // see dropdown options in alumini.html
+  skills: ['JavaScript', 'React', 'Node.js'],
+  availability: 'available',       // available | busy | unavailable
+  bio: 'Short bio here.',
+  mentorship: 'Mentorship preferences here.',
+  connections: 0,
+  sessions: 0,
+  rating: 5.0,
+  linkedin: 'https://linkedin.com/in/yourprofile'
+}
+```
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## 🏫 About
+
+Built for the **IIIT Bhagalpur** community to bridge the gap between students and alumni, fostering mentorship and career growth.
+
+> *"The best way to grow is to learn from those who walked the path before you."*
