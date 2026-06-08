@@ -1,4 +1,4 @@
-# AlumniConnect — IIIT Bhagalpur
+# AlumniConnect — IIIT Bhagalpur 
 
 > **Find your mentor. Grow your career.**  
 > A mentorship directory connecting students of IIIT Bhagalpur with alumni across top companies and domains.
